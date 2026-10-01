@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FH6 RACING — FH6 GARAGE</title>
+<style>
+:root{--bg:#06080b;--card:#10151c;--card2:#171e27;--line:#303945;--red:#e3262e;--gold:#e0b64d;--text:#f5f7fa;--muted:#96a2ae}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -15%,#313b47,#0b1016 42%,#050609 82%);color:var(--text);font-family:Inter,system-ui,Segoe UI,Arial,sans-serif}
+.wrap{max-width:980px;margin:auto;padding:18px 13px 40px}.brand{text-align:center;font-size:11px;font-weight:1000;letter-spacing:.3em}.title{text-align:center;font-size:clamp(35px,9vw,70px);line-height:.86;font-weight:1000;font-style:italic;margin:7px 0}.title span{color:var(--red)}.flags{text-align:center;font-size:22px;letter-spacing:8px}.tag{text-align:center;color:var(--muted);font-size:11px;letter-spacing:.12em;margin:8px 0 18px}
+.machine{background:linear-gradient(145deg,#161c24,#090c11);border:1px solid #3b4551;border-radius:25px;padding:14px;box-shadow:0 24px 75px #0009}.stats{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;margin-bottom:10px}.stat{background:#080b10;border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:10px;color:var(--muted)}.stat b{color:#fff}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.wheel{background:#05070a;border:2px solid #414b57;border-radius:16px;padding:9px}.wheelhead{text-align:center;color:var(--muted);font-size:9px;letter-spacing:.2em;font-weight:1000;margin-bottom:7px}.slot{height:112px;border-radius:12px;background:linear-gradient(#141a22,#05070a);display:flex;align-items:center;justify-content:center;text-align:center;padding:10px;font-size:clamp(12px,2.5vw,19px);font-weight:1000;overflow:hidden}.rolling{animation:roll .07s linear infinite}@keyframes roll{50%{transform:translateY(5px)}}
+.spin{width:100%;min-height:60px;margin-top:10px;border:0;border-radius:15px;background:var(--red);color:#fff;font-size:18px;font-weight:1000;cursor:pointer}.spin:disabled{opacity:.45}.actions{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:8px}.btn{min-height:45px;border:1px solid var(--line);border-radius:11px;background:#1a212a;color:#fff;font-weight:900;cursor:pointer}.btn.active{border-color:var(--gold);color:var(--gold)}
+.result{margin-top:10px;background:var(--card2);border:1px solid var(--line);border-radius:18px;padding:15px}.resulttop{text-align:center}.eyebrow{font-size:9px;letter-spacing:.2em;color:var(--muted);font-weight:1000}.car{font-size:clamp(22px,5vw,39px);font-weight:1000;margin:5px 0}.chips{display:flex;justify-content:center;gap:6px;flex-wrap:wrap}.chip{border:1px solid #4a5561;border-radius:999px;padding:5px 9px;font-size:10px;font-weight:900}.cards{display:grid;grid-template-columns:1.25fr 1fr;gap:8px;margin-top:10px}.panel{background:#090d12;border:1px solid var(--line);border-radius:13px;padding:12px}.label{font-size:9px;color:var(--muted);letter-spacing:.17em}.big{font-size:20px;font-weight:1000;margin:3px 0}.small{font-size:11px;color:var(--muted);line-height:1.4}.mission{color:var(--gold);font-size:12px;font-weight:950;margin-top:7px}
+.filters{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:9px}.field{background:#090d12;border:1px solid var(--line);border-radius:11px;padding:8px}.field label{display:block;color:var(--muted);font-size:9px;margin-bottom:4px}.field select{width:100%;background:#090d12;color:#fff;border:0;outline:0;font-size:12px}.history{margin-top:10px}.history h3{font-size:10px;letter-spacing:.17em;color:var(--muted);margin:0 0 6px}.hist{display:grid;grid-template-columns:1fr auto;gap:8px;background:#090d12;border:1px solid var(--line);border-radius:9px;padding:8px;margin-top:5px;font-size:11px}.hist span{color:var(--muted);text-align:right}.status{text-align:center;color:var(--muted);font-size:10px;min-height:16px;margin-top:9px}.flash{animation:flash .55s ease}@keyframes flash{0%{transform:scale(.98);opacity:.3}60%{transform:scale(1.02)}100%{transform:scale(1)}}
+@media(max-width:620px){.grid{grid-template-columns:1fr}.slot{height:72px}.actions{grid-template-columns:1fr 1fr}.filters{grid-template-columns:1fr 1fr}.cards{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<div class="brand">FH6 RACING</div>
+<div class="title">FH6 <span>GARAGE</span></div>
+<div class="flags">🇦🇺 🇳🇿</div>
+<div class="tag">CAR × CLASS × TRACK × RACE RULE — YOUR NEXT FH6 CHALLENGE</div>
+<section class="machine">
+<div class="stats"><div class="stat">CAR POOL <b id="carCount">loading</b></div><div class="stat">TRACKS <b>89</b></div><div class="stat">SPINS <b id="spinCount">0</b></div><div class="stat">MODE <b id="mode">FULL GARAGE</b></div></div>
+<div class="grid">
+<div class="wheel"><div class="wheelhead">🚗 CAR</div><div class="slot" id="carSlot">READY</div></div>
+<div class="wheel"><div class="wheelhead">🏆 CLASS</div><div class="slot" id="classSlot">READY</div></div>
+<div class="wheel"><div class="wheelhead">🏁 TRACK</div><div class="slot" id="trackSlot">READY</div></div>
+<div class="wheel"><div class="wheelhead">🏁 RACE RULE</div><div class="slot" id="ruleSlot">READY</div></div>
+</div>
+<button class="spin" id="spin">🎰 SPIN THE FH6 GARAGE</button>
+<div class="actions"><button class="btn" id="copy" disabled>📋 COPY</button><button class="btn" id="share" disabled>📤 SHARE</button><button class="btn" id="norepeat">🔁 NO REPEATS: OFF</button><button class="btn" id="reroll" disabled>🎲 REROLL TRACK</button></div>
+<div class="result" id="result">
+<div class="resulttop"><div class="eyebrow">YOUR FH6 CHALLENGE</div><div class="car" id="winner">Spin to find your fate</div><div class="chips" id="chips"><span class="chip">CAR</span><span class="chip">CLASS</span><span class="chip">TRACK</span><span class="chip">RULE</span></div></div>
+<div class="cards">
+<div class="panel"><div class="label">ASSIGNED TRACK</div><div class="big" id="trackName">—</div><div class="small" id="trackInfo">The track wheel is waiting.</div></div>
+<div class="panel"><div class="label">RACE RULE</div><div class="big" id="ruleName">—</div><div class="small" id="ruleInfo">The third wheel decides the race rule.</div><div class="mission" id="mission">🏁 RACE RULE: —</div></div>
+</div>
+</div>
+<div class="filters">
+<div class="field"><label>CLASS</label><select id="cls"><option>ALL</option><option>D</option><option>C</option><option>B</option><option>A</option><option>S1</option><option>S2</option><option>R</option></select></div>
+<div class="field"><label>CAR TYPE</label><select id="type"><option>ALL</option><option>JDM</option><option>DRIFT</option><option>RALLY</option><option>HYPER</option><option>MUSCLE</option><option>OFFROAD</option></select></div>
+<div class="field"><label>DRIVETRAIN</label><select id="drive"><option>ALL</option><option>AWD</option><option>RWD</option><option>FWD</option></select></div>
+<div class="field"><label>TRACK TYPE</label><select id="trackType"><option>ANY</option><option>ROAD</option><option>DIRT</option><option>CROSS COUNTRY</option><option>STREET</option><option>TOUGE</option><option>DRAG</option><option>TIME ATTACK</option></select></div>
+</div>
+<div class="history"><h3>RECENT CHALLENGES</h3><div id="history"><div class="hist"><span>No spins yet.</span><span>—</span></div></div></div>
+<div class="status" id="status">Loading the full car database…</div>
+</section>
+</main>
+<script>
+(()=>{
+const CAR_URL='https://raw.githubusercontent.com/pixelswiftali/forzadata/main/cars.json';
+const tracks=[
+['ROAD','Coastline Sprint','Nangan Region'],['ROAD','Electric Town Circuit','Tokyo City'],['ROAD','Festival Sprint','Ohtani Region'],['ROAD','Highway Circuit','Tokyo City'],['ROAD','Hokubu Circuit','Hokubu Region'],['ROAD','Irokawa Circuit','Nangan Region'],['ROAD','Ito Sprint','Ito Region'],['ROAD','Legend Island Circuit','Legend Island'],['ROAD','Narai-Juku Circuit','Shimanoyama Region'],['ROAD','Satta Sprint','Ito Region'],['ROAD','Seaside Park Sprint','Ito Region'],['ROAD','Shikisai Sprint','Hokubu Region'],['ROAD','Shimanoyama Circuit','Shimanoyama Region'],['ROAD','Shimanoyama Sprint','Shimanoyama Region'],['ROAD','Shirakawa Circuit','Minamino Region'],['ROAD','Soni Circuit','Takashiro Region'],['ROAD','The Colossus','Shimanoyama Region'],['ROAD','The Goliath','Legend Island'],['ROAD','Tokyo Railway Sprint','Tokyo City'],['ROAD','Venus Sprint','Takashiro Region'],
+['DIRT','Airfield Trail','Minamino Region'],['DIRT','Bamboo Forest Scramble','Ito Region'],['DIRT','Cherry Field Trail','Ohtani Region'],['DIRT','Chiheisen Scramble','Ohtani Region'],['DIRT','Hirosaki Scramble','Takashiro Region'],['DIRT','Hokubu Trail','Hokubu Region'],['DIRT','Horizon Stadium Scramble','Shimanoyama Region'],['DIRT','Ine Scramble','Ito Region'],['DIRT','Ito Trail','Ito Region'],['DIRT','Kawazu Nanadaru Scramble','Nangan Region'],['DIRT','Kinkaku-ji Trail','Ohtani Region'],['DIRT','Legend Island Trail','Legend Island'],['DIRT','Nukabira Trail','Takashiro Region'],['DIRT','Oyashirazu Trail','Ito Region'],['DIRT','Sekibe Scramble','Ito Region'],['DIRT','Sotoyama Scramble','Sotoyama Region'],['DIRT','Sunflower Scramble','Hokubu Region'],['DIRT','Taiyaki Scramble','Shimanoyama Region'],['DIRT','Takashiro Trail','Takashiro Region'],['DIRT','The Gauntlet','Takashiro Region'],['DIRT','Waterfall Trail','Takashiro Region'],
+['CROSS COUNTRY','City Docks Cross Country Circuit','Tokyo City'],['CROSS COUNTRY','Edogawa Cross Country Circuit','Tokyo City'],['CROSS COUNTRY','Izu Cross Country','Nangan Region'],['CROSS COUNTRY','Legend Island Cross Country Circuit','Legend Island'],['CROSS COUNTRY','Nangan Cross Country Circuit','Nangan Region'],['CROSS COUNTRY','Naruo Cross Country Circuit','Minamino Region'],['CROSS COUNTRY','Oka Cross Country Circuit','Hokubu Region'],['CROSS COUNTRY','Ruriko-ji Cross Country','Sotoyama Region'],['CROSS COUNTRY','Shimanoyama Cross Country','Shimanoyama Region'],['CROSS COUNTRY','Shinjuku Gyoen Cross Country','Ito Region'],['CROSS COUNTRY','Snow Forest Cross Country Circuit','Sotoyama Region'],['CROSS COUNTRY','Soni Highlands Cross Country','Takashiro Region'],['CROSS COUNTRY','Stadium Cross Country Circuit','Shimanoyama Region'],['CROSS COUNTRY','Takashiro Cross Country','Sotoyama Region'],['CROSS COUNTRY','Tateyama Alpine Cross Country','Sotoyama Region'],['CROSS COUNTRY','Temple Cross Country','Ohtani Region'],['CROSS COUNTRY','The Titan','Ohtani Region'],['CROSS COUNTRY','Wind Farm Cross Country','Ito Region'],['CROSS COUNTRY','Yahikoyama Cross Country','Ito Region'],
+['STREET','Cedar Run','Minamino Region'],['STREET','Daikoku Chase','Tokyo City'],['STREET','Daikoku Circuit','Tokyo City'],['STREET','Festival Chase','Ohtani Region'],['STREET','Hokubu Ascent','Hokubu Region'],['STREET','Kita Ine','Ito Region'],['STREET','Matsumi Climb','Ohtani Region'],['STREET','Minami Chase','Shimanoyama Region'],['STREET','Nachi Run','Hokubu Region'],['STREET','Norikura Descent','Takashiro Region'],['STREET','Okishinaimura Run','Takashiro Region'],['STREET','Rainbow Bridge Descent','Nangan Region'],['STREET','River Descent','Minamino Region'],['STREET','Shimanoyama Charge','Shimanoyama Region'],['STREET','Sunflower Charge','Hokubu Region'],['STREET','Tokyo City Docks Charge','Tokyo City'],
+['TOUGE','Arashiyama Takao','Minamino Region'],['TOUGE','Bandai Azuma','Shimanoyama Region'],['TOUGE','Hakone Nanamagari (Touge)','Nangan Region'],['TOUGE','Mt. Haruna (Touge)','Takashiro Region'],['TOUGE','Norikura Skyline','Sotoyama Region'],
+['DRAG','Horizon Festival Drag Strip','Festival'],['DRAG','Irokawa Space Center Drag Strip','Nangan Region'],['DRAG','Ito Airfield Drag Strip','Ito Region'],
+['TIME ATTACK','Hokubu Time Attack','Hokubu Region'],['TIME ATTACK','Legend Island Time Attack','Legend Island'],['TIME ATTACK','Sekibe Time Attack','Ito Region'],['TIME ATTACK','Shimanoyama Drift Circuit','Shimanoyama Region'],['TIME ATTACK','Soni Time Attack','Takashiro Region']
+];
+const rules=[
+['CLEAN RACING','No wall taps, no shortcuts, no dirty passes.','Complete a clean race.'],
+['NO REWIND','Rewinds are banned.','One mistake stays in the result.'],
+['STOCK BUILD','No performance upgrades.','Race the car exactly as it comes.'],
+['RWD ONLY','The final build must be rear-wheel drive.','Convert the car if necessary.'],
+['FASTEST LAP','Race for one perfect lap.','Best clean lap wins.'],
+['NO ASSISTS','Turn driving assists off where possible.','Driver skill decides the result.'],
+['ONE LAP SHOOTOUT','One lap. No second chances.','Set your best time immediately.'],
+['RACE IT CLEAN','No intentional contact.','Win without using another car as a brake.'],
+['BUILD TO CLASS','Tune the car to its selected class.','Then race the assigned track.'],
+['GRIP BUILD','Build for cornering and braking.','Straight-line speed comes second.'],
+['POWER BUILD','Prioritise acceleration and top speed.','Make the straights count.'],
+['RACE SPEC','Tune specifically for the assigned track.','No generic tune allowed.'],
+['NO RESTART','Once the race begins, finish it.','Crashes are part of the result.'],
+['QUALIFY & RACE','Set one qualifying lap first.','Then race with your starting position.'],
+['TIME ATTACK','Solo run only.','Three attempts; keep your best clean time.']
+];
+let cars=[],used=new Set(),history=[],spins=0,last=null,busy=false,noRepeat=false;
+const $=id=>document.getElementById(id);
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function normalise(data){const arr=Array.isArray(data)?data:(data&&Array.isArray(data.cars)?data.cars:[]);return arr.map((x,i)=>{const fh=x.fh6||{};const specs=x.specs||{};let cls=fh.class||'';if(!cls){const t=String(fh.tier||'').toUpperCase();cls=['D','C','B','A','S1','S2','R'].includes(t)?t:''}const layout=String(specs.layout||'').toUpperCase();const drive=layout.includes('ALL-WHEEL')?'AWD':layout.includes('REAR-WHEEL')?'RWD':layout.includes('FRONT-WHEEL')?'FWD':'';const text=(x.full_name||x.title||'').toLowerCase();let type='';if(/drift/.test(String(fh.division||'').toLowerCase()+text))type='DRIFT';else if(/rally|rally monsters|retro rally|modern rally|classic rally/.test(String(fh.division||'').toLowerCase()+text))type='RALLY';else if(/hypercars|hypercar/.test(String(fh.division||'').toLowerCase()+text)||['S2','R'].includes(cls))type='HYPER';else if(/muscle/.test(String(fh.division||'').toLowerCase()+text))type='MUSCLE';else if(/offroad|bugg|utv|unlimited offroad/.test(String(fh.division||'').toLowerCase()+text))type='OFFROAD';else if(/japan|toyota|nissan|honda|mazda|subaru|mitsubishi|lexus|datsun|autozam|acura|suzuki/.test((x.country||'')+' '+text))type='JDM';return{id:x.id||i,make:x.manufacturer||'',name:x.full_name||x.title||x.model||'Unknown car',cls,drive,type}}).filter(x=>x.name&&x.name!=='Unknown car')}
+function carPool(){let cls=$('cls').value,type=$('type').value,drive=$('drive').value;return cars.filter(c=>(cls==='ALL'||c.cls===cls)&&(type==='ALL'||c.type===type)&&(drive==='ALL'||c.drive===drive)&&(!noRepeat||!used.has(c.id)))}
+function trackPool(){let t=$('trackType').value;return tracks.filter(x=>t==='ANY'||x[0]===t)}
+function choose(a){return a[Math.floor(Math.random()*a.length)]}
+function trackFor(c){let tp=trackPool();if(!tp.length)tp=tracks;let preferred=tp.filter(t=>{if(c.type==='DRIFT')return t[0]==='TIME ATTACK'||t[0]==='TOUGE';if(c.type==='RALLY'||c.type==='OFFROAD')return t[0]==='DIRT'||t[0]==='CROSS COUNTRY';if(c.type==='HYPER')return t[0]==='ROAD'||t[0]==='TIME ATTACK';if(c.type==='JDM')return ['TOUGE','STREET','ROAD'].includes(t[0]);return true});return choose(preferred.length?preferred:tp)}
+function renderHistory(){$('history').innerHTML=history.length?history.map((h,i)=>`<div class="hist"><div><b>${i?'':'🔥 '}${esc(h.car)}</b><br><span>${esc(h.track)} • ${esc(h.rule)}</span></div><span>${esc(h.cls)} • ${esc(h.drive)}</span></div>`).join(''):'<div class="hist"><span>No spins yet.</span><span>—</span></div>'}
+function text(){return last?`🏁 FH6 RACING — FH6 GARAGE\n🚗 ${last.car}\n🏆 ${last.cls||'?'} CLASS • ${last.drive||'?'}\n🏁 ${last.track[1]} — ${last.track[0]}\n🏁 RACE RULE: ${last.rule[0]}\n📋 ${last.rule[1]}\n\n🇦🇺 🇳🇿 FH6 RACING`:''}
+function show(c,tr,r){last={car:c.make+' '+c.name,cls:c.cls,drive:c.drive,track:tr,rule:r};$('winner').textContent=last.car;$('classSlot').textContent=(c.cls||'?')+' CLASS';$('chips').innerHTML=`<span class="chip">${c.cls||'?'} CLASS</span><span class="chip">${c.drive||'DRIVE ?'}</span><span class="chip">${c.type||'GENERAL'}</span>`;$('trackName').textContent=tr[1];$('trackInfo').textContent=tr[0]+' • '+tr[2];$('ruleName').textContent=r[0];$('ruleInfo').textContent=r[1];$('mission').textContent='🏁 RACE RULE: '+r[2];$('copy').disabled=false;$('share').disabled=false;$('reroll').disabled=false;$('result').classList.remove('flash');void $('result').offsetWidth;$('result').classList.add('flash');used.add(c.id);history.unshift({car:last.car,track:tr[1],rule:r[0],cls:c.cls,drive:c.drive});history=history.slice(0,5);renderHistory();$('status').textContent='Race locked. No excuses.'}
+function spin(){if(busy)return;let cp=carPool();if(!cp.length){$('status').textContent='No cars match those filters. Change a filter or turn NO REPEATS off.';return}let tp=trackPool();if(!tp.length){$('status').textContent='No tracks match that track filter.';return}busy=true;$('spin').disabled=true;$('copy').disabled=true;$('share').disabled=true;$('reroll').disabled=true;document.querySelectorAll('.slot').forEach(x=>x.classList.add('rolling'));let n=0,t=setInterval(()=>{let c=choose(cp),tr=choose(tp),r=choose(rules);$('carSlot').textContent=c.name;$('classSlot').textContent=(c.cls||'?')+' CLASS';$('trackSlot').textContent=tr[1];$('ruleSlot').textContent=r[0];if(++n>=30){clearInterval(t);document.querySelectorAll('.slot').forEach(x=>x.classList.remove('rolling'));let c2=choose(cp),tr2=trackFor(c2),r2=choose(rules);$('carSlot').textContent=c2.name;$('classSlot').textContent=(c2.cls||'?')+' CLASS';$('trackSlot').textContent=tr2[1];$('ruleSlot').textContent=r2[0];show(c2,tr2,r2);spins++;$('spinCount').textContent=spins;$('carCount').textContent=carPool().length;busy=false;$('spin').disabled=false}},65)}
+$('spin').addEventListener('click',spin);
+$('norepeat').addEventListener('click',()=>{noRepeat=!noRepeat;$('norepeat').textContent='🔁 NO REPEATS: '+(noRepeat?'ON':'OFF');$('norepeat').classList.toggle('active',noRepeat);$('mode').textContent=noRepeat?'NO REPEATS':'FULL GARAGE';$('carCount').textContent=carPool().length});
+$('reroll').addEventListener('click',()=>{if(!last||busy)return;let c=cars.find(x=>(x.make+' '+x.name)===last.car);if(!c)return;let tr=trackFor(c),r=last.rule;show(c,tr,r)});
+['cls','type','drive','trackType'].forEach(id=>$(id).addEventListener('change',()=>{$('carCount').textContent=carPool().length;$('status').textContent=carPool().length+' cars eligible.'}));
+$('copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(text());$('copy').textContent='✅ COPIED';setTimeout(()=>$('copy').textContent='📋 COPY',1200)}catch{alert(text())}});
+$('share').addEventListener('click',async()=>{if(navigator.share){try{await navigator.share({title:'FH6 RACING FH6 Garage',text:text()})}catch{}}else{try{await navigator.clipboard.writeText(text());$('share').textContent='✅ COPIED';setTimeout(()=>$('share').textContent='📤 SHARE',1200)}catch{alert(text())}}});
+async function load(){try{let r=await fetch(CAR_URL,{cache:'no-store'});if(!r.ok)throw Error('data');let d=await r.json();cars=normalise(d);if(cars.length<500)throw Error('small');$('carCount').textContent=cars.length;$('status').textContent='Full external FH6 dataset loaded. 89 tracks are ready.'}catch(e){cars=[];$('carCount').textContent='618*';$('status').textContent='The full roster needs an online connection to load. Tracks are built in. *Official roster currently lists 618 cars.';}}
+load();
+})();
+</script>
+</body>
+</html>
